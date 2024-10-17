@@ -5,6 +5,28 @@ import { notFound } from "../error/NotFoundError";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Clé secrète pour signer le token
 
+interface Permission{
+  author : string[] 
+  book : string[] 
+  bookCollection : string[] 
+} ;
+
+const permissionAdmin: Permission = {  
+  author: ["read", "write", "modify", "delete"],
+  book: ["read", "write", "modify", "delete"],
+  bookCollection: ["read", "modify", "write", "delete"]
+}; 
+const permissionGerant: Permission = {
+  author: ["read", "write", "modify"],
+  book: ["read", "write", "modify"],
+  bookCollection: ["read", "modify", "write", "delete"]
+} 
+const permissionUtilisateur: Permission = {
+  author: ["read"],
+  book: ["read", "modify"],
+  bookCollection: ["read"]
+} 
+
 export class AuthenticationService {
   public async authenticate(
     username: string,
